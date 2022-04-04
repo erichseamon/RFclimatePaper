@@ -4,10 +4,6 @@ The following folders contain the available datasets used as part of dissertatio
 
 - seamon_dissertation_dataload.R.  This file loads all data dynamically from github into R.  This script is run automatically within each appendix Rmarkdown (located in the appendices folder)
 
-- /RMA_Rda: RDA database files that contain aggregated PNW insurance loss claim data.
-
-- /RMA_csv: Individual CSV insurance claim data files by year.
-
 - /RMA_originaldata: Original .txt files for insurance loss claims, by year, for the entire United States.  These files are used in Appendix A and Appendix B.
 
 - /climate_correlation_summaries.  Climate correlation summary data, loaded in Appendix C for modeling.
@@ -23,8 +19,6 @@ The following folders contain the available datasets used as part of dissertatio
 - /states.  State shapefiles used in all appendices.
 
 - /wheat_prices.  Annual wheat prices used in Appendix C.
-
-- /CPI.  Consumer pricing indexing data used in Appendix A.
 
 - /wheatproduction. NASS wheat production data, used in Appendix A.
 
