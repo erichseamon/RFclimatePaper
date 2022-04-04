@@ -2,23 +2,21 @@
 
 The following folders contain the available datasets used as part of dissertation analyses, documented in appendices A, B, and C.
 
-- seamon_dissertation_dataload.R.  This file loads all data dynamically from github into R.  This script is run automatically within each appendix Rmarkdown (located in the appendices folder)
+- seamon_dissertation_dataload.R.  This file loads all data dynamically from github into R.  This script is run automatically by running the supplemental_materials.Rmd
 
-- /RMA_originaldata: Original .txt files for insurance loss claims, by year, for the entire United States.  These files are used in Appendix A and Appendix B.
+- /RMA_originaldata: Original .txt files for insurance loss claims, by year, for the entire United States.  
 
-- /climate_correlation_summaries.  Climate correlation summary data, loaded in Appendix C for modeling.
+- /climate_correlation_summaries.  Climate correlation summary data.
 
-- /climate_matrices.  Climate correlation matrices between individual climate variables and wheat/drought insurance loss.  Used in Appendix C.
+- /climate_matrices.  Climate correlation matrices between individual climate variables and wheat/drought insurance loss.
 
-- /climate_outputs.  Climate outputs that are used in Appendix C.
+- /climate_outputs.  Climate outputs data.
 
-- /climatology.  Base climatology for the iPNW used in Appendix C.
+- /climatology.  Base climatology for the iPNW.
 
-- /counties.  County shapefiles used in all appendices.
+- /counties.  County shapefiles.
 
-- /states.  State shapefiles used in all appendices.
+- /states.  State shapefiles.
 
-- /wheat_prices.  Annual wheat prices used in Appendix C.
-
-- /wheatproduction. NASS wheat production data, used in Appendix A.
+- /wheat_prices.  Annual wheat prices.
 
