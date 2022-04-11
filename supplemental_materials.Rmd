@@ -21,12 +21,9 @@ mainfont: serif
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE, out.width='900px', out.height='700px', dpi=200)
-
-#rmarkdown::render(input = "/dmine/code/git/RFclimatePaper/appendices/seamon_PHD_appendix_C.Rmd", output_file = paste("/dmine/code/git/RFclimatePaper/appendices/seamon_PHD_appendix_C.html", sep=""))
-
 ```
 
-![](https://dmine.io/waf/img/Step1.png)
+ 
 
 ### Overview
 
@@ -56,7 +53,7 @@ Our analysis can be described in 9 specific steps:
 
 **Step 10.** Plotting R2 results of regression random forest model for each county.
 
-![](https://dmine.io/waf/img/Step1.png)
+ 
 
 
 ### Step 1. Examining wheat/drought acreage ratios compared to average precipitation, potential evapotranspiration, and aridity for the iPNW study area, 2001 to 2015
@@ -79,61 +76,63 @@ library(RCurl)
   
 #----load climate data
   
-  
-URL <- "https://raw.githubusercontent.com/erichseamon/RFclimatePaper/master/data/climatology/climatology.zip"
-destfile <- "/tmp/climatology.zip"
-download.file(URL, destfile)
-outDir<-"/tmp/climatology/"
-unzip(destfile,exdir=outDir)
+#   
+# URL <- "https://raw.githubusercontent.com/erichseamon/RFclimatePaper/master/data/climatology/climatology.zip"
+# destfile <- "/tmp/climatology.zip"
+# download.file(URL, destfile)
+# outDir<-"/tmp/climatology/"
+# unzip(destfile,exdir=outDir)
+
+unzip("data/climatology/climatology.zip", exdir="data/climatology/")
 
 
-ID2001 <- read.csv("/tmp/climatology/Idaho_2001_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2002 <- read.csv("/tmp/climatology/Idaho_2002_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2003 <- read.csv("/tmp/climatology/Idaho_2003_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2004 <- read.csv("/tmp/climatology/Idaho_2004_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2005 <- read.csv("/tmp/climatology/Idaho_2005_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2006 <- read.csv("/tmp/climatology/Idaho_2006_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2007 <- read.csv("/tmp/climatology/Idaho_2007_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2008 <- read.csv("/tmp/climatology/Idaho_2008_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2009 <- read.csv("/tmp/climatology/Idaho_2009_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2010 <- read.csv("/tmp/climatology/Idaho_2010_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2011 <- read.csv("/tmp/climatology/Idaho_2011_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2012 <- read.csv("/tmp/climatology/Idaho_2012_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2013 <- read.csv("/tmp/climatology/Idaho_2013_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2014 <- read.csv("/tmp/climatology/Idaho_2014_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2015 <- read.csv("/tmp/climatology/Idaho_2015_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2001 <- read.csv("data/climatology/Idaho_2001_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2002 <- read.csv("data/climatology/Idaho_2002_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2003 <- read.csv("data/climatology/Idaho_2003_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2004 <- read.csv("data/climatology/Idaho_2004_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2005 <- read.csv("data/climatology/Idaho_2005_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2006 <- read.csv("data/climatology/Idaho_2006_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2007 <- read.csv("data/climatology/Idaho_2007_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2008 <- read.csv("data/climatology/Idaho_2008_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2009 <- read.csv("data/climatology/Idaho_2009_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2010 <- read.csv("data/climatology/Idaho_2010_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2011 <- read.csv("data/climatology/Idaho_2011_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2012 <- read.csv("data/climatology/Idaho_2012_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2013 <- read.csv("data/climatology/Idaho_2013_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2014 <- read.csv("data/climatology/Idaho_2014_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2015 <- read.csv("data/climatology/Idaho_2015_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
 
-OR2001 <- read.csv("/tmp/climatology/Oregon_2001_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2002 <- read.csv("/tmp/climatology/Oregon_2002_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2003 <- read.csv("/tmp/climatology/Oregon_2003_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2004 <- read.csv("/tmp/climatology/Oregon_2004_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2005 <- read.csv("/tmp/climatology/Oregon_2005_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2006 <- read.csv("/tmp/climatology/Oregon_2006_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2007 <- read.csv("/tmp/climatology/Oregon_2007_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2008 <- read.csv("/tmp/climatology/Oregon_2008_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2009 <- read.csv("/tmp/climatology/Oregon_2009_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2010 <- read.csv("/tmp/climatology/Oregon_2010_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2011 <- read.csv("/tmp/climatology/Oregon_2011_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2012 <- read.csv("/tmp/climatology/Oregon_2012_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2013 <- read.csv("/tmp/climatology/Oregon_2013_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2014 <- read.csv("/tmp/climatology/Oregon_2014_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2015 <- read.csv("/tmp/climatology/Oregon_2015_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2001 <- read.csv("data/climatology/Oregon_2001_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2002 <- read.csv("data/climatology/Oregon_2002_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2003 <- read.csv("data/climatology/Oregon_2003_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2004 <- read.csv("data/climatology/Oregon_2004_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2005 <- read.csv("data/climatology/Oregon_2005_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2006 <- read.csv("data/climatology/Oregon_2006_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2007 <- read.csv("data/climatology/Oregon_2007_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2008 <- read.csv("data/climatology/Oregon_2008_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2009 <- read.csv("data/climatology/Oregon_2009_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2010 <- read.csv("data/climatology/Oregon_2010_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2011 <- read.csv("data/climatology/Oregon_2011_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2012 <- read.csv("data/climatology/Oregon_2012_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2013 <- read.csv("data/climatology/Oregon_2013_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2014 <- read.csv("data/climatology/Oregon_2014_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2015 <- read.csv("data/climatology/Oregon_2015_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
 
-WA2001 <- read.csv("/tmp/climatology/Washington_2001_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2002 <- read.csv("/tmp/climatology/Washington_2002_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2003 <- read.csv("/tmp/climatology/Washington_2003_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2004 <- read.csv("/tmp/climatology/Washington_2004_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2005 <- read.csv("/tmp/climatology/Washington_2005_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2006 <- read.csv("/tmp/climatology/Washington_2006_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2007 <- read.csv("/tmp/climatology/Washington_2007_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2008 <- read.csv("/tmp/climatology/Washington_2008_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2009 <- read.csv("/tmp/climatology/Washington_2009_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2010 <- read.csv("/tmp/climatology/Washington_2010_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2011 <- read.csv("/tmp/climatology/Washington_2011_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2012 <- read.csv("/tmp/climatology/Washington_2012_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2013 <- read.csv("/tmp/climatology/Washington_2013_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2014 <- read.csv("/tmp/climatology/Washington_2014_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2015 <- read.csv("/tmp/climatology/Washington_2015_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2001 <- read.csv("data/climatology/Washington_2001_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2002 <- read.csv("data/climatology/Washington_2002_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2003 <- read.csv("data/climatology/Washington_2003_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2004 <- read.csv("data/climatology/Washington_2004_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2005 <- read.csv("data/climatology/Washington_2005_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2006 <- read.csv("data/climatology/Washington_2006_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2007 <- read.csv("data/climatology/Washington_2007_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2008 <- read.csv("data/climatology/Washington_2008_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2009 <- read.csv("data/climatology/Washington_2009_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2010 <- read.csv("data/climatology/Washington_2010_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2011 <- read.csv("data/climatology/Washington_2011_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2012 <- read.csv("data/climatology/Washington_2012_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2013 <- read.csv("data/climatology/Washington_2013_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2014 <- read.csv("data/climatology/Washington_2014_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2015 <- read.csv("data/climatology/Washington_2015_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
 
 ziggy.df <- rbind(ID2001, ID2002, ID2003, ID2004, ID2005, ID2006, ID2007, ID2008, ID2009, ID2010, ID2011, ID2012, ID2013, ID2014, ID2015)
 
@@ -160,7 +159,7 @@ ziggy.df <- ziggy.df[-17]
 OR1 <- aggregate(.~countyfips + year, ziggy.df, sum)
 OR1 <- aggregate(.~countyfips, OR1, mean)
 
-countiesfips <- read.csv("/mnt/ceph/erichs/git/RFclimatePaper/data/counties/counties_fips.csv", 
+countiesfips <- read.csv("data/counties/counties_fips.csv", 
 header = TRUE, strip.white = TRUE, sep = ",")
 
 #countiesfips <- read.csv("/tmp/countiesfips.csv", header = TRUE, strip.white = TRUE, sep = ",")
@@ -176,41 +175,43 @@ WA2 <- merge(countiesfips, WA1, by=("countyfips"))
 
 
 #------add crop insurance data
+# 
+# URL <- "https://raw.githubusercontent.com/erichseamon/RFclimatePaper/master/data/RMA_originaldata/RMA_originaldata_txt.zip"
+# destfile <- "/tmp/RMA_originaldata_txt.zip"
+# download.file(URL, destfile)
+# outDir<-"/tmp/RMA_originaldata/"
+# unzip(destfile,exdir=outDir)
 
-URL <- "https://raw.githubusercontent.com/erichseamon/RFclimatePaper/master/data/RMA_originaldata/RMA_originaldata_txt.zip"
-destfile <- "/tmp/RMA_originaldata_txt.zip"
-download.file(URL, destfile)
-outDir<-"/tmp/RMA_originaldata/"
-unzip(destfile,exdir=outDir)
+unzip("data/RMA_originaldata/RMA_originaldata_txt.zip", exdir="data/RMA_originaldata/")
 
 
-rma1989 <- read.csv("/tmp/RMA_originaldata/1989.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma1990 <- read.csv("/tmp/RMA_originaldata/1990.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma1991 <- read.csv("/tmp/RMA_originaldata/1991.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma1992 <- read.csv("/tmp/RMA_originaldata/1992.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma1993 <- read.csv("/tmp/RMA_originaldata/1993.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma1994 <- read.csv("/tmp/RMA_originaldata/1994.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma1995 <- read.csv("/tmp/RMA_originaldata/1995.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma1996 <- read.csv("/tmp/RMA_originaldata/1996.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma1997 <- read.csv("/tmp/RMA_originaldata/1997.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma1998 <- read.csv("/tmp/RMA_originaldata/1998.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma1999 <- read.csv("/tmp/RMA_originaldata/1999.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2000 <- read.csv("/tmp/RMA_originaldata/2000.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2001 <- read.csv("/tmp/RMA_originaldata/2001.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2002 <- read.csv("/tmp/RMA_originaldata/2002.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2003 <- read.csv("/tmp/RMA_originaldata/2003.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2004 <- read.csv("/tmp/RMA_originaldata/2004.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2005 <- read.csv("/tmp/RMA_originaldata/2005.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2006 <- read.csv("/tmp/RMA_originaldata/2006.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2007 <- read.csv("/tmp/RMA_originaldata/2007.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2008 <- read.csv("/tmp/RMA_originaldata/2008.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2009 <- read.csv("/tmp/RMA_originaldata/2009.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2010 <- read.csv("/tmp/RMA_originaldata/2010.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2011 <- read.csv("/tmp/RMA_originaldata/2011.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2012 <- read.csv("/tmp/RMA_originaldata/2012.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2013 <- read.csv("/tmp/RMA_originaldata/2013.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2014 <- read.csv("/tmp/RMA_originaldata/2014.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2015 <- read.csv("/tmp/RMA_originaldata/2015.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma1989 <- read.csv("data/RMA_originaldata/1989.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma1990 <- read.csv("data/RMA_originaldata/1990.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma1991 <- read.csv("data/RMA_originaldata/1991.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma1992 <- read.csv("data/RMA_originaldata/1992.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma1993 <- read.csv("data/RMA_originaldata/1993.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma1994 <- read.csv("data/RMA_originaldata/1994.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma1995 <- read.csv("data/RMA_originaldata/1995.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma1996 <- read.csv("data/RMA_originaldata/1996.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma1997 <- read.csv("data/RMA_originaldata/1997.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma1998 <- read.csv("data/RMA_originaldata/1998.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma1999 <- read.csv("data/RMA_originaldata/1999.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2000 <- read.csv("data/RMA_originaldata/2000.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2001 <- read.csv("data/RMA_originaldata/2001.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2002 <- read.csv("data/RMA_originaldata/2002.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2003 <- read.csv("data/RMA_originaldata/2003.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2004 <- read.csv("data/RMA_originaldata/2004.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2005 <- read.csv("data/RMA_originaldata/2005.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2006 <- read.csv("data/RMA_originaldata/2006.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2007 <- read.csv("data/RMA_originaldata/2007.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2008 <- read.csv("data/RMA_originaldata/2008.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2009 <- read.csv("data/RMA_originaldata/2009.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2010 <- read.csv("data/RMA_originaldata/2010.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2011 <- read.csv("data/RMA_originaldata/2011.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2012 <- read.csv("data/RMA_originaldata/2012.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2013 <- read.csv("data/RMA_originaldata/2013.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2014 <- read.csv("data/RMA_originaldata/2014.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2015 <- read.csv("data/RMA_originaldata/2015.txt", sep = "|", header = FALSE, strip.white = TRUE)
 
 
 #load individual files from 1989 to 2000
@@ -500,13 +501,13 @@ grid.arrange(pr, pet, prpet, nrow = 1)
 ipnw_climate_county_comparison("WHEAT", "Drought")
 
 ```
-![](https://dmine.io/waf/img/Step1.png)
+ 
 
 ### Step 2. Construction of design matrices of all monthly climate combinations, per county and per climate variable (precipitation, maximum temperature, and potential evapotranspiration)
 
 For the three examined climate variables (potential evapotranspiration, precipitation, maximum temperature), a design matrix was developed for each of the 24 counties that are part of the defined iPNW study area.  For each county, an absolute correlation was calculated for each monthly combination for each climate variable to the total wheat insurance loss due to drought.  The result is a design matrix map that identifies the monthly combination with the highest correlation For example, for Whitman county, WA, for maximum temperature - the monthly combination with highest correlation between max temperature and wheat insurance loss due to drought was May/June/July (denoted as July 2).
 
-![](https://dmine.io/waf/img/Step1.png)
+ 
 
 #### Step 2.1 Maximum temperature design matrix for Whitman County, WA, wheat insurance loss due to drought
 
@@ -546,30 +547,37 @@ For the three examined climate variables (potential evapotranspiration, precipit
   dmvector <- as.data.frame(rep(NA, times=144))
   
   cl = 0
+# 
+# URL <- "https://raw.githubusercontent.com/erichseamon/RFclimatePaper/master/data/climate_matrices/climate_matrices.zip"
+# destfile <- "/tmp/climate_matrices.zip"
+# download.file(URL, destfile)
+# outDir<-"/tmp/climate_matrices"
+# unzip(destfile,exdir=outDir)
 
-URL <- "https://raw.githubusercontent.com/erichseamon/RFclimatePaper/master/data/climate_matrices/climate_matrices.zip"
-destfile <- "/tmp/climate_matrices.zip"
-download.file(URL, destfile)
-outDir<-"/tmp/climate_matrices"
-unzip(destfile,exdir=outDir)
+unzip("data/climate_matrices/climate_matrices.zip", exdir="data/climate_matrices/")
 
-URL <- "https://raw.githubusercontent.com/erichseamon/RFclimatePaper/master/data/climate_correlation_summaries/climate_correlations_summaries.zip"
-destfile <- "/tmp/climate_correlations_summaries.zip"
-download.file(URL, destfile)
-outDir<-"/tmp/climate_correlations_summaries"
-unzip(destfile,exdir=outDir)
+
+
+# 
+# URL <- "https://raw.githubusercontent.com/erichseamon/RFclimatePaper/master/data/climate_correlation_summaries/climate_correlations_summaries.zip"
+# destfile <- "/tmp/climate_correlations_summaries.zip"
+# download.file(URL, destfile)
+# outDir<-"/tmp/climate_correlations_summaries"
+# unzip(destfile,exdir=outDir)
+
+unzip("data/climate_correlation_summaries/climate_correlations_summaries.zip", exdir="data/climate_correlation_summaries/")
 
   
   for (ppp in climmonth) {
     cl = cl +1
     
   
-    setwd("/tmp/climate_matrices")
-    file1 <- read.csv(paste(state_var, "_", county_var, "_", commodity_var, "_", damage_var, "_", ppp, ".csv", sep=""))
+    #setwd("/tmp/climate_matrices")
+    file1 <- read.csv(paste("data/climate_matrices/", state_var, "_", county_var, "_", commodity_var, "_", damage_var, "_", ppp, ".csv", sep=""))
     climatevar <- as.data.frame(cbind((file1[climate_var]), file1[2]))
     
-    setwd("/tmp/climate_correlations_summaries")
-    file2 <- as.data.frame(read.csv(paste(state_var, "_", county_var, "_", commodity_var, "_", damage_var, "_", predictor_var, ".csv", sep="")))
+    #setwd("/tmp/climate_correlations_summaries")
+    file2 <- as.data.frame(read.csv(paste("data/climate_correlation_summaries/", state_var, "_", county_var, "_", commodity_var, "_", damage_var, "_", predictor_var, ".csv", sep="")))
     file2 <- subset(file2, state == state_var)
     file2 <- subset(file2, county == county_var)
     colnames(file2) <- c("X", "year", "damagecause", "county", "state", "commodity", predictor_var )
@@ -670,7 +678,7 @@ dmvector <- data.frame(dmvector)
   
   my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 108)
   
-  setwd("/mnt/ceph/erichs/RFclimatePaper/climatematrix_pngs")
+  #setwd("data/climatematrix_pngs")
   
   #  png(filename=paste(state1, "_", county1, "_", damage1, "_", climate_variable12, "_designmatrix.png", sep=""))
   lblcol <- c(9:1)
@@ -715,7 +723,7 @@ lhei = c(1.5,4,1)
 #  nba_heatmap <- heatmap.2(dmvector3, Rowv=NA, Colv=NA, col=topo.colors(16), scale="none", dendrogram = "none", trace="none", labRow = rev(monthzzz), tracecol = "black", key = TRUE, cellnote = dmvector3a, notecol = "black", notecex = 1.5, key.ylab = "", key.xlab = "loss correlation range", key.title = "", main=paste(climate_var, " vs ", predictor_var, "\n", county_var, " County ", state_var, " ", damage_var, "\n", "MAX Correlation in cell: ",  monthnumlist3$combined, sep=""), add.expr=points(newone$Var1,newone$Var2, pch=15, cex = 5.5 , col=rgb(199/255, 0, 0, 0.8)))
   
 ```
-![](https://dmine.io/waf/img/Step1.png)
+ 
 
 #### Step 2.2. Potential Evapotranspiration design matrix for Whitman County, WA, wheat insurance loss due to drought
 
@@ -761,13 +769,13 @@ lhei = c(1.5,4,1)
     cl = cl +1
     
     
-    setwd("/tmp/climate_matrices")
-    file1 <- read.csv(paste(state_var, "_", county_var, "_", commodity_var, "_", damage_var, "_", ppp, ".csv", sep=""))
+    #setwd("data/climate_matrices")
+    file1 <- read.csv(paste("data/climate_matrices/", state_var, "_", county_var, "_", commodity_var, "_", damage_var, "_", ppp, ".csv", sep=""))
     climatevar <- as.data.frame(cbind((file1[climate_var]), file1[2]))
     
     
-    setwd("/tmp/climate_correlations_summaries")
-    file2 <- as.data.frame(read.csv(paste(state_var, "_", county_var, "_", commodity_var, "_", damage_var, "_", predictor_var, ".csv", sep="")))
+    #setwd("data/climate_correlations_summaries")
+    file2 <- as.data.frame(read.csv(paste("data/climate_correlation_summaries/", state_var, "_", county_var, "_", commodity_var, "_", damage_var, "_", predictor_var, ".csv", sep="")))
     file2 <- subset(file2, state == state_var)
     file2 <- subset(file2, county == county_var)
     colnames(file2) <- c("X", "year", "damagecause", "county", "state", "commodity", predictor_var )
@@ -868,7 +876,7 @@ dmvector <- data.frame(dmvector)
   
   my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 108)
   
-    setwd("/mnt/ceph/erichs/RFclimatePaper/climatematrix_pngs")
+    #setwd("data/climatematrix_pngs")
   
   #  png(filename=paste(state1, "_", county1, "_", damage1, "_", climate_variable12, "_designmatrix.png", sep=""))
   lblcol <- c(9:1)
@@ -914,7 +922,7 @@ lhei = c(1.5,4,1)
   
 
 ```
-![](https://dmine.io/waf/img/Step1.png)
+ 
 
 #### Step 2.3. Precipitation design matrix for Whitman County, WA, wheat insurance loss due to drought
 
@@ -959,13 +967,13 @@ lhei = c(1.5,4,1)
     cl = cl +1
     
     
-    setwd("/tmp/climate_matrices")
-    file1 <- read.csv(paste(state_var, "_", county_var, "_", commodity_var, "_", damage_var, "_", ppp, ".csv", sep=""))
+    #setwd("data/climate_matrices")
+    file1 <- read.csv(paste("data/climate_matrices/", state_var, "_", county_var, "_", commodity_var, "_", damage_var, "_", ppp, ".csv", sep=""))
     climatevar <- as.data.frame(cbind((file1[climate_var]), file1[2]))
     
     
-    setwd("/tmp/climate_correlations_summaries")
-    file2 <- as.data.frame(read.csv(paste(state_var, "_", county_var, "_", commodity_var, "_", damage_var, "_", predictor_var, ".csv", sep="")))
+    #setwd("data/climate_correlations_summaries")
+    file2 <- as.data.frame(read.csv(paste("data/climate_correlation_summaries/", state_var, "_", county_var, "_", commodity_var, "_", damage_var, "_", predictor_var, ".csv", sep="")))
     file2 <- subset(file2, state == state_var)
     file2 <- subset(file2, county == county_var)
     colnames(file2) <- c("X", "year", "damagecause", "county", "state", "commodity", predictor_var )
@@ -1066,7 +1074,7 @@ dmvector <- data.frame(dmvector)
   
   my_palette <- colorRampPalette(c("red", "yellow", "green"))(n = 108)
   
-    setwd("/mnt/ceph/erichs/RFclimatePaper/climatematrix_pngs")
+   # setwd("/mnt/ceph/erichs/RFclimatePaper/climatematrix_pngs")
   
   #  png(filename=paste(state1, "_", county1, "_", damage1, "_", climate_variable12, "_designmatrix.png", sep=""))
   lblcol <- c(9:1)
@@ -1113,7 +1121,7 @@ lhei = c(1.5,4,1)
   
 
 ```
-![](https://dmine.io/waf/img/Step1.png)
+ 
 
 #### Step 2.4. Palmer Drought Severity Index (PDSI) design matrix for Whitman County, WA, wheat insurance loss due to drought
 
@@ -1157,13 +1165,13 @@ lhei = c(1.5,4,1)
     cl = cl +1
     
     
-    setwd("/tmp/climate_matrices")
-    file1 <- read.csv(paste(state_var, "_", county_var, "_", commodity_var, "_", damage_var, "_", ppp, ".csv", sep=""))
+    #setwd("data/climate_matrices")
+    file1 <- read.csv(paste("data/climate_matrices/", state_var, "_", county_var, "_", commodity_var, "_", damage_var, "_", ppp, ".csv", sep=""))
     climatevar <- as.data.frame(cbind((file1[climate_var]), file1[2]))
     
     
-    setwd("/tmp/climate_correlations_summaries")
-    file2 <- as.data.frame(read.csv(paste(state_var, "_", county_var, "_", commodity_var, "_", damage_var, "_", predictor_var, ".csv", sep="")))
+    #setwd("data/climate_correlations_summaries")
+    file2 <- as.data.frame(read.csv(paste("data/climate_correlation_summaries/", state_var, "_", county_var, "_", commodity_var, "_", damage_var, "_", predictor_var, ".csv", sep="")))
     file2 <- subset(file2, state == state_var)
     file2 <- subset(file2, county == county_var)
     colnames(file2) <- c("X", "year", "damagecause", "county", "state", "commodity", predictor_var )
@@ -1306,14 +1314,14 @@ lhei = c(1.5,4,1)
   
 
 ```
-![](https://dmine.io/waf/img/Step1.png)
+ 
 
 
 ### Step 3. Examining spatial relationships of climate lagged correlations
 
 In step 3, we generate maps of our climate-lagged correlations, for each climate variable.  Each county is labeled with the optimum monthly period that has the highest correlation for that climate variable and wheat/drought insurance loss (July 2 = two months previous to July, or May/June/July), along with the correlation value.  Each correlation value is absolute (correlation coefficent - R)
 
-![](https://dmine.io/waf/img/Step1.png)
+ 
 
 
 #### Step 3.1. Precipitation time lagged correlations to wheat/drought insurance loss, per county, for the iPNW
@@ -1334,14 +1342,19 @@ library(RCurl)
     
       library(RColorBrewer)
       library(dplyr)
-  
-URL <- "https://raw.githubusercontent.com/erichseamon/RFclimatePaper/master/data/climate_correlations/climate_correlations.zip"
-destfile <- "/tmp/climate_correlations.zip"
-download.file(URL, destfile)
-outDir<-"/tmp/climate_correlations"
-unzip(destfile,exdir=outDir)
+#   
+# URL <- "https://raw.githubusercontent.com/erichseamon/RFclimatePaper/master/data/climate_correlations/climate_correlations.zip"
+# destfile <- "/tmp/climate_correlations.zip"
+# download.file(URL, destfile)
+# outDir<-"/tmp/climate_correlations"
+# unzip(destfile,exdir=outDir)
 
-      setwd("/tmp/climate_correlations/")
+
+unzip("data/climate_correlations/climate_correlations.zip", exdir="data/climate_correlations/")
+
+
+
+      #setwd("data/climate_correlations/")
       
       
       if (predictor_var  == "loss") {
@@ -1355,14 +1368,14 @@ unzip(destfile,exdir=outDir)
       
       
       
-      files  <- list.files(pattern = predictor)
+      files  <- list.files(path = "data/climate_correlations/", pattern = predictor)
       filey <- do.call(rbind, strsplit(files, '[_]'))
       
       filey <- subset(filey, filey[,5] == climate_var)
       
       colnames(filey) <- c("state", "county", "commodity", "damage", "climate", "crop1", "crop2", "response", "crop3")
       filey <- as.data.frame(filey)
-      data <- with(filey, paste(state, "_", county, "_", commodity, "_", damage, "_", climate, "_", crop1, "_", crop2, "_", response, "_", crop3, sep=""))
+      data <- with(filey, paste("data/climate_correlations/", state, "_", county, "_", commodity, "_", damage, "_", climate, "_", crop1, "_", crop2, "_", response, "_", crop3, sep=""))
       
       
       
@@ -1555,15 +1568,18 @@ unzip(destfile,exdir=outDir)
       colnames(table5) <- c("NAME", "COMMODITY", "DAMAGE", "climate", "correlations")
       
       #table5$STATE_NAME <-  state.name[match(table5[,1],state.abb)]
-      
-URL <- "https://raw.githubusercontent.com/erichseamon/RFclimatePaper/master/data/counties/threestate_palouse.zip"
-destfile <- "/tmp/seamon/threestate_palouse.zip"
-download.file(URL, destfile)
-outDir<-"/tmp/seamon"
-unzip(destfile,exdir=outDir) 
+#       
+# URL <- "https://raw.githubusercontent.com/erichseamon/RFclimatePaper/master/data/counties/threestate_palouse.zip"
+# destfile <- "/tmp/seamon/threestate_palouse.zip"
+# download.file(URL, destfile)
+# outDir<-"/tmp/seamon"
+# unzip(destfile,exdir=outDir) 
 
 
-counties <- readShapePoly('/tmp/seamon/threestate_palouse.shp',
+unzip("data/counties/threestate_palouse.zip", exdir="data/counties/")
+
+
+counties <- readShapePoly('data/counties/threestate_palouse.shp',
                      proj4string=CRS
                      ("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"))
 projection = CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0")
@@ -1690,7 +1706,7 @@ counties <- counties[counties$NAME != "Clearwater",]
 
 
 ```
-![](https://dmine.io/waf/img/Step1.png)
+ 
 
 #### Step 3.2. Potential Evapotranspiration time lagged correlations to wheat/drought insurance loss, per county, for the iPNW
 
@@ -1710,7 +1726,7 @@ library(RCurl)
       library(RColorBrewer)
       library(dplyr)
       
-      setwd("/tmp/climate_correlations/")
+      #setwd("data/climate_correlations/")
       
       
       if (predictor_var  == "loss") {
@@ -1724,14 +1740,14 @@ library(RCurl)
       
       
       
-      files  <- list.files(pattern = predictor)
+      files  <- list.files(path = "data/climate_correlations/", pattern = predictor)
       filey <- do.call(rbind, strsplit(files, '[_]'))
       
       filey <- subset(filey, filey[,5] == climate_var)
       
       colnames(filey) <- c("state", "county", "commodity", "damage", "climate", "crop1", "crop2", "response", "crop3")
       filey <- as.data.frame(filey)
-      data <- with(filey, paste(state, "_", county, "_", commodity, "_", damage, "_", climate, "_", crop1, "_", crop2, "_", response, "_", crop3, sep=""))
+      data <- with(filey, paste("data/climate_correlations/", state, "_", county, "_", commodity, "_", damage, "_", climate, "_", crop1, "_", crop2, "_", response, "_", crop3, sep=""))
       
       
       
@@ -1924,15 +1940,17 @@ library(RCurl)
       colnames(table5) <- c("NAME", "COMMODITY", "DAMAGE", "climate", "correlations")
       
       #table5$STATE_NAME <-  state.name[match(table5[,1],state.abb)]
-      
-      URL <- "https://raw.githubusercontent.com/erichseamon/RFclimatePaper/master/data/counties/threestate_palouse.zip"
-destfile <- "/tmp/seamon/threestate_palouse.zip"
-download.file(URL, destfile)
-outDir<-"/tmp/seamon"
-unzip(destfile,exdir=outDir) 
-      
+#       
+#       URL <- "https://raw.githubusercontent.com/erichseamon/RFclimatePaper/master/data/counties/threestate_palouse.zip"
+# destfile <- "/tmp/seamon/threestate_palouse.zip"
+# download.file(URL, destfile)
+# outDir<-"/tmp/seamon"
+# unzip(destfile,exdir=outDir) 
+#       
+unzip("data/counties/threestate_palouse.zip", exdir="data/counties/")
 
-counties <- readShapePoly('/tmp/seamon/threestate_palouse.shp',
+
+counties <- readShapePoly('data/counties/threestate_palouse.shp',
                      proj4string=CRS
                      ("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"))
 projection = CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0")
@@ -2047,7 +2065,7 @@ counties3$CORRELATION <- as.numeric(counties3$CORRELATION)
 
 
 ```
-![](https://dmine.io/waf/img/Step1.png)
+ 
 
 #### Step 3.3. Maximum Temperature time lagged correlations to wheat/drought insurance loss, per county, for the iPNW
 
@@ -2067,7 +2085,7 @@ library(RCurl)
       library(RColorBrewer)
       library(dplyr)
       
-      setwd("/tmp/climate_correlations/")
+      #setwd("/tmp/climate_correlations/")
       
       
       if (predictor_var  == "loss") {
@@ -2081,14 +2099,14 @@ library(RCurl)
       
       
       
-      files  <- list.files(pattern = predictor)
+      files  <- list.files(path = "data/climate_correlations/", pattern = predictor)
       filey <- do.call(rbind, strsplit(files, '[_]'))
       
       filey <- subset(filey, filey[,5] == climate_var)
       
       colnames(filey) <- c("state", "county", "commodity", "damage", "climate", "crop1", "crop2", "response", "crop3")
       filey <- as.data.frame(filey)
-      data <- with(filey, paste(state, "_", county, "_", commodity, "_", damage, "_", climate, "_", crop1, "_", crop2, "_", response, "_", crop3, sep=""))
+      data <- with(filey, paste("data/climate_correlations/", state, "_", county, "_", commodity, "_", damage, "_", climate, "_", crop1, "_", crop2, "_", response, "_", crop3, sep=""))
       
       
       
@@ -2282,15 +2300,18 @@ library(RCurl)
       
       #table5$STATE_NAME <-  state.name[match(table5[,1],state.abb)]
       
+#       
+#       URL <- "https://raw.githubusercontent.com/erichseamon/RFclimatePaper/master/data/counties/threestate_palouse.zip"
+# destfile <- "/tmp/seamon/threestate_palouse.zip"
+# download.file(URL, destfile)
+# outDir<-"/tmp/seamon"
+# unzip(destfile,exdir=outDir) 
+
+unzip("data/counties/threestate_palouse.zip", exdir="data/counties/")
+
       
-      URL <- "https://raw.githubusercontent.com/erichseamon/RFclimatePaper/master/data/counties/threestate_palouse.zip"
-destfile <- "/tmp/seamon/threestate_palouse.zip"
-download.file(URL, destfile)
-outDir<-"/tmp/seamon"
-unzip(destfile,exdir=outDir) 
       
-      
-counties <- readShapePoly('/tmp/seamon/threestate_palouse.shp',
+counties <- readShapePoly('data/counties/threestate_palouse.shp',
                      proj4string=CRS
                      ("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"))
 projection = CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0")
@@ -2404,7 +2425,7 @@ counties3$CORRELATION <- as.numeric(counties3$CORRELATION)
 
 
 ```
-![](https://dmine.io/waf/img/Step1.png)
+ 
 
 #### Step 3.4. Palmer Drought Severity Index (PDSI) time lagged correlations to wheat/drought insurance loss, per county, for the iPNW
 
@@ -2424,7 +2445,7 @@ library(RCurl)
       library(RColorBrewer)
       library(dplyr)
       
-      setwd("/tmp/climate_correlations/")
+      #setwd("data/climate_correlations/")
       
       
       if (predictor_var  == "loss") {
@@ -2438,14 +2459,14 @@ library(RCurl)
       
       
       
-      files  <- list.files(pattern = predictor)
+      files  <- list.files(path = "data/climate_correlations/", pattern = predictor)
       filey <- do.call(rbind, strsplit(files, '[_]'))
       
       filey <- subset(filey, filey[,5] == climate_var)
       
       colnames(filey) <- c("state", "county", "commodity", "damage", "climate", "crop1", "crop2", "response", "crop3")
       filey <- as.data.frame(filey)
-      data <- with(filey, paste(state, "_", county, "_", commodity, "_", damage, "_", climate, "_", crop1, "_", crop2, "_", response, "_", crop3, sep=""))
+      data <- with(filey, paste("data/climate_correlations/", state, "_", county, "_", commodity, "_", damage, "_", climate, "_", crop1, "_", crop2, "_", response, "_", crop3, sep=""))
       
       
       
@@ -2638,15 +2659,17 @@ library(RCurl)
       colnames(table5) <- c("NAME", "COMMODITY", "DAMAGE", "climate", "correlations")
       
       #table5$STATE_NAME <-  state.name[match(table5[,1],state.abb)]
+#       
+#   URL <- "https://raw.githubusercontent.com/erichseamon/RFclimatePaper/master/data/counties/threestate_palouse.zip"
+# destfile <- "/tmp/seamon/threestate_palouse.zip"
+# download.file(URL, destfile)
+# outDir<-"/tmp/seamon"
+# unzip(destfile,exdir=outDir)     
       
-  URL <- "https://raw.githubusercontent.com/erichseamon/RFclimatePaper/master/data/counties/threestate_palouse.zip"
-destfile <- "/tmp/seamon/threestate_palouse.zip"
-download.file(URL, destfile)
-outDir<-"/tmp/seamon"
-unzip(destfile,exdir=outDir)     
+unzip("data/counties/threestate_palouse.zip", exdir="data/counties/")
+
       
-      
-counties <- readShapePoly('/tmp/seamon/threestate_palouse.shp',
+counties <- readShapePoly('data/counties/threestate_palouse.shp',
                      proj4string=CRS
                      ("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0"))
 projection = CRS("+proj=longlat +datum=WGS84 +ellps=WGS84 +towgs84=0,0,0")
@@ -2773,7 +2796,7 @@ counties3$CORRELATION <- as.numeric(counties3$CORRELATION)
 
 
 ```
-![](https://dmine.io/waf/img/Step1.png)
+ 
 
 ### Step 4. Examining Bi-variate relationships between individual climate variables and wheat/drought insurance loss, for all 24 iPNW counties, from 2001 to 2015.
 
@@ -2801,59 +2824,65 @@ var_commodity <- "WHEAT"
 var_damage <- "Drought"
 
 #load wheat pricing
+# 
+# URL <- "https://raw.githubusercontent.com/erichseamon/RFclimatePaper/master/data/wheat_prices/wheat_prices_1989_2015.csv"
+# destfile <- "/tmp/wheat_prices_1989_2015.csv"
+# download.file(URL, destfile)
+# outDir<-"/tmp/"
+# #unzip(destfile,exdir=outDir)
 
-URL <- "https://raw.githubusercontent.com/erichseamon/RFclimatePaper/master/data/wheat_prices/wheat_prices_1989_2015.csv"
-destfile <- "/tmp/wheat_prices_1989_2015.csv"
-download.file(URL, destfile)
-outDir<-"/tmp/"
-#unzip(destfile,exdir=outDir)
+unzip("data/wheat_prices/wheat_prices_1989_2015.csv", exdir="data/wheat_prices/")
 
-wheatprice <- read.csv("/tmp/wheat_prices_1989_2015.csv", header = TRUE, strip.white = TRUE, sep = ",")
+
+wheatprice <- read.csv("data/wheat_prices/wheat_prices_1989_2015.csv", header = TRUE, strip.white = TRUE, sep = ",")
 wheatprice <- wheatprice[-1]
 
 colnames(wheatprice) <- c("year", "price")
 
 #--accessing output of design matrix/time lag data based on monthly selection from dashboard runs
+# 
+# URL <- "https://raw.githubusercontent.com/erichseamon/RFclimatePaper/master/data/climate_outputs/climate_outputs.zip"
+# destfile <- "/tmp/climate_outputs.zip"
+# download.file(URL, destfile)
+# outDir<-"/tmp/climate_outputs"
+# unzip(destfile,exdir=outDir)
 
-URL <- "https://raw.githubusercontent.com/erichseamon/RFclimatePaper/master/data/climate_outputs/climate_outputs.zip"
-destfile <- "/tmp/climate_outputs.zip"
-download.file(URL, destfile)
-outDir<-"/tmp/climate_outputs"
-unzip(destfile,exdir=outDir)
+unzip("data/climate_outputs/climate_outputs.zip", exdir="data/climate_outputs/")
 
-setwd("/tmp/climate_outputs")
 
-var1 <- read.csv("pr_jun2_cube_root_loss_climatecorrelation.csv")
+#setwd("data/climate_outputs")
+
+var1 <- read.csv(paste("data/climate_outputs/", "pr_jun2_cube_root_loss_climatecorrelation.csv", sep=""))
 colnames(var1)[9] <- paste(colnames(var1)[2], "_zscore", sep="")
-var2 <- read.csv("pet_jul3_cube_root_loss_climatecorrelation.csv")
+var2 <- read.csv(paste("data/climate_outputs/", "pet_jul3_cube_root_loss_climatecorrelation.csv", sep=""))
 colnames(var2)[9] <- paste(colnames(var2)[2], "_zscore", sep="")
-var3 <- read.csv("tmmx_jul2_cube_root_loss_climatecorrelation.csv")
+var3 <- read.csv(paste("data/climate_outputs/", "tmmx_jul2_cube_root_loss_climatecorrelation.csv", sep=""))
 colnames(var3)[9] <- paste(colnames(var3)[2], "_zscore", sep="")
-var4 <- read.csv("pr_jun2_cube_root_acres_climatecorrelation.csv")
+var4 <- read.csv(paste("data/climate_outputs/", "pr_jun2_cube_root_acres_climatecorrelation.csv", sep=""))
 colnames(var4)[9] <- paste(colnames(var4)[2], "_zscore", sep="")
-var5 <- read.csv("pet_jun2_loss_per_acre_climatecorrelation.csv")
+var5 <- read.csv(paste("data/climate_outputs/", "pet_jun2_loss_per_acre_climatecorrelation.csv", sep=""))
 colnames(var5)[9] <- paste(colnames(var5)[2], "_zscore", sep="")
-var6 <- read.csv("tmmx_jun1_cube_root_acres_climatecorrelation.csv")
+var6 <- read.csv(paste("data/climate_outputs/", "tmmx_jun1_cube_root_acres_climatecorrelation.csv", sep=""))
 colnames(var6)[9] <- paste(colnames(var6)[2], "_zscore", sep="")
-var7 <- read.csv("pr_sep5_loss_climatedata.csv")
+var7 <- read.csv(paste("data/climate_outputs/", "pr_sep5_loss_climatedata.csv", sep=""))
 colnames(var7)[9] <- paste(colnames(var7)[2], "_zscore", sep="")
-var8 <- read.csv("pet_sep5_loss_climatedata.csv")
+var8 <- read.csv(paste("data/climate_outputs/", "pet_sep5_loss_climatedata.csv", sep=""))
 colnames(var8)[9] <- paste(colnames(var8)[2], "_zscore", sep="")
-var9 <- read.csv("tmmx_jul2_loss_climatedata.csv")
+var9 <- read.csv(paste("data/climate_outputs/", "tmmx_jul2_loss_climatedata.csv", sep=""))
 colnames(var9)[9] <- paste(colnames(var9)[2], "_zscore", sep="")
-var9x <- read.csv("fm100_jul3_cube_root_loss_climatedata.csv")
+var9x <- read.csv(paste("data/climate_outputs/", "fm100_jul3_cube_root_loss_climatedata.csv", sep=""))
 colnames(var9x)[9] <- paste(colnames(var9x)[2], "_zscore", sep="")
-var10x <- read.csv("fm1000_aug2_cube_root_loss_climatedata.csv")
+var10x <- read.csv(paste("data/climate_outputs/", "fm1000_aug2_cube_root_loss_climatedata.csv", sep=""))
 colnames(var10x)[9] <- paste(colnames(var10x)[2], "_zscore", sep="")
-var11x <- read.csv("pdsi_sep4_cube_root_loss_climatedata.csv")
+var11x <- read.csv(paste("data/climate_outputs/", "pdsi_sep4_cube_root_loss_climatedata.csv", sep=""))
 colnames(var11x)[9] <- paste(colnames(var11x)[2], "_zscore", sep="")
-var12x <- read.csv("pdsi_sep4_cube_root_loss_climatecorrelation.csv")
+var12x <- read.csv(paste("data/climate_outputs/", "pdsi_sep4_cube_root_loss_climatecorrelation.csv", sep=""))
 colnames(var12x)[9] <- paste(colnames(var12x)[2], "_zscore", sep="")
-var7a <- read.csv("pr_sep5_loss_climatecorrelation.csv")
+var7a <- read.csv(paste("data/climate_outputs/", "pr_sep5_loss_climatecorrelation.csv", sep=""))
 colnames(var7a)[9] <- paste(colnames(var7a)[2], "_zscore", sep="")
-var8a <- read.csv("pet_sep5_loss_climatecorrelation.csv")
+var8a <- read.csv(paste("data/climate_outputs/", "pet_sep5_loss_climatecorrelation.csv", sep=""))
 colnames(var8a)[9] <- paste(colnames(var8a)[2], "_zscore", sep="")
-var9a <- read.csv("tmmx_jul2_loss_climatecorrelation.csv")
+var9a <- read.csv(paste("data/climate_outputs/", "tmmx_jul2_loss_climatecorrelation.csv", sep=""))
 colnames(var9a)[9] <- paste(colnames(var9a)[2], "_zscore", sep="")
 
 data1 <- cbind(var1, var2[9], var3[9])
@@ -2890,53 +2919,53 @@ library(plotrix)
 library(ggplot2)
   library(gridExtra)
 
-ID2001 <- read.csv("/tmp/climatology/Idaho_2001_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2002 <- read.csv("/tmp/climatology/Idaho_2002_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2003 <- read.csv("/tmp/climatology/Idaho_2003_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2004 <- read.csv("/tmp/climatology/Idaho_2004_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2005 <- read.csv("/tmp/climatology/Idaho_2005_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2006 <- read.csv("/tmp/climatology/Idaho_2006_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2007 <- read.csv("/tmp/climatology/Idaho_2007_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2008 <- read.csv("/tmp/climatology/Idaho_2008_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2009 <- read.csv("/tmp/climatology/Idaho_2009_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2010 <- read.csv("/tmp/climatology/Idaho_2010_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2011 <- read.csv("/tmp/climatology/Idaho_2011_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2012 <- read.csv("/tmp/climatology/Idaho_2012_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2013 <- read.csv("/tmp/climatology/Idaho_2013_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2014 <- read.csv("/tmp/climatology/Idaho_2014_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-ID2015 <- read.csv("/tmp/climatology/Idaho_2015_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2001 <- read.csv("data/climatology/Idaho_2001_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2002 <- read.csv("data/climatology/Idaho_2002_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2003 <- read.csv("data/climatology/Idaho_2003_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2004 <- read.csv("data/climatology/Idaho_2004_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2005 <- read.csv("data/climatology/Idaho_2005_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2006 <- read.csv("data/climatology/Idaho_2006_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2007 <- read.csv("data/climatology/Idaho_2007_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2008 <- read.csv("data/climatology/Idaho_2008_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2009 <- read.csv("data/climatology/Idaho_2009_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2010 <- read.csv("data/climatology/Idaho_2010_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2011 <- read.csv("data/climatology/Idaho_2011_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2012 <- read.csv("data/climatology/Idaho_2012_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2013 <- read.csv("data/climatology/Idaho_2013_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2014 <- read.csv("data/climatology/Idaho_2014_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+ID2015 <- read.csv("data/climatology/Idaho_2015_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
 
-OR2001 <- read.csv("/tmp/climatology/Oregon_2001_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2002 <- read.csv("/tmp/climatology/Oregon_2002_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2003 <- read.csv("/tmp/climatology/Oregon_2003_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2004 <- read.csv("/tmp/climatology/Oregon_2004_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2005 <- read.csv("/tmp/climatology/Oregon_2005_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2006 <- read.csv("/tmp/climatology/Oregon_2006_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2007 <- read.csv("/tmp/climatology/Oregon_2007_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2008 <- read.csv("/tmp/climatology/Oregon_2008_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2009 <- read.csv("/tmp/climatology/Oregon_2009_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2010 <- read.csv("/tmp/climatology/Oregon_2010_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2011 <- read.csv("/tmp/climatology/Oregon_2011_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2012 <- read.csv("/tmp/climatology/Oregon_2012_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2013 <- read.csv("/tmp/climatology/Oregon_2013_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2014 <- read.csv("/tmp/climatology/Oregon_2014_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-OR2015 <- read.csv("/tmp/climatology/Oregon_2015_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2001 <- read.csv("data/climatology/Oregon_2001_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2002 <- read.csv("data/climatology/Oregon_2002_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2003 <- read.csv("data/climatology/Oregon_2003_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2004 <- read.csv("data/climatology/Oregon_2004_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2005 <- read.csv("data/climatology/Oregon_2005_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2006 <- read.csv("data/climatology/Oregon_2006_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2007 <- read.csv("data/climatology/Oregon_2007_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2008 <- read.csv("data/climatology/Oregon_2008_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2009 <- read.csv("data/climatology/Oregon_2009_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2010 <- read.csv("data/climatology/Oregon_2010_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2011 <- read.csv("data/climatology/Oregon_2011_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2012 <- read.csv("data/climatology/Oregon_2012_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2013 <- read.csv("data/climatology/Oregon_2013_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2014 <- read.csv("data/climatology/Oregon_2014_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+OR2015 <- read.csv("data/climatology/Oregon_2015_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
 
-WA2001 <- read.csv("/tmp/climatology/Washington_2001_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2002 <- read.csv("/tmp/climatology/Washington_2002_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2003 <- read.csv("/tmp/climatology/Washington_2003_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2004 <- read.csv("/tmp/climatology/Washington_2004_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2005 <- read.csv("/tmp/climatology/Washington_2005_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2006 <- read.csv("/tmp/climatology/Washington_2006_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2007 <- read.csv("/tmp/climatology/Washington_2007_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2008 <- read.csv("/tmp/climatology/Washington_2008_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2009 <- read.csv("/tmp/climatology/Washington_2009_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2010 <- read.csv("/tmp/climatology/Washington_2010_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2011 <- read.csv("/tmp/climatology/Washington_2011_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2012 <- read.csv("/tmp/climatology/Washington_2012_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2013 <- read.csv("/tmp/climatology/Washington_2013_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2014 <- read.csv("/tmp/climatology/Washington_2014_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
-WA2015 <- read.csv("/tmp/climatology/Washington_2015_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2001 <- read.csv("data/climatology/Washington_2001_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2002 <- read.csv("data/climatology/Washington_2002_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2003 <- read.csv("data/climatology/Washington_2003_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2004 <- read.csv("data/climatology/Washington_2004_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2005 <- read.csv("data/climatology/Washington_2005_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2006 <- read.csv("data/climatology/Washington_2006_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2007 <- read.csv("data/climatology/Washington_2007_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2008 <- read.csv("data/climatology/Washington_2008_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2009 <- read.csv("data/climatology/Washington_2009_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2010 <- read.csv("data/climatology/Washington_2010_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2011 <- read.csv("data/climatology/Washington_2011_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2012 <- read.csv("data/climatology/Washington_2012_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2013 <- read.csv("data/climatology/Washington_2013_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2014 <- read.csv("data/climatology/Washington_2014_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
+WA2015 <- read.csv("data/climatology/Washington_2015_ipnw_summary", header = TRUE, strip.white = TRUE, sep = ",")
 
 ziggy.df <- rbind(ID2001, ID2002, ID2003, ID2004, ID2005, ID2006, ID2007, ID2008, ID2009, ID2010, ID2011, ID2012, ID2013, ID2014, ID2015)
 
@@ -2963,7 +2992,7 @@ ziggy.df <- ziggy.df[-17]
 OR1 <- aggregate(.~countyfips + year, ziggy.df, sum)
 OR1 <- aggregate(.~countyfips, OR1, mean)
 
-countiesfips <- read.csv("/mnt/ceph/erichs/git/RFclimatePaper/data/counties/counties_fips.csv", 
+countiesfips <- read.csv("data/counties/counties_fips.csv", 
 header = TRUE, strip.white = TRUE, sep = ",")
 
 #countiesfips <- read.csv("/tmp/countiesfips.csv", 
@@ -2980,33 +3009,33 @@ OR2 <- merge(countiesfips, OR1, by=("countyfips"))
 ID2 <- merge(countiesfips, ID1, by=("countyfips"))
 WA2 <- merge(countiesfips, WA1, by=("countyfips"))
 
-rma1989 <- read.csv("/tmp/RMA_originaldata/1989.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma1990 <- read.csv("/tmp/RMA_originaldata/1990.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma1991 <- read.csv("/tmp/RMA_originaldata/1991.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma1992 <- read.csv("/tmp/RMA_originaldata/1992.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma1993 <- read.csv("/tmp/RMA_originaldata/1993.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma1994 <- read.csv("/tmp/RMA_originaldata/1994.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma1995 <- read.csv("/tmp/RMA_originaldata/1995.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma1996 <- read.csv("/tmp/RMA_originaldata/1996.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma1997 <- read.csv("/tmp/RMA_originaldata/1997.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma1998 <- read.csv("/tmp/RMA_originaldata/1998.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma1999 <- read.csv("/tmp/RMA_originaldata/1999.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2000 <- read.csv("/tmp/RMA_originaldata/2000.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2001 <- read.csv("/tmp/RMA_originaldata/2001.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2002 <- read.csv("/tmp/RMA_originaldata/2002.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2003 <- read.csv("/tmp/RMA_originaldata/2003.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2004 <- read.csv("/tmp/RMA_originaldata/2004.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2005 <- read.csv("/tmp/RMA_originaldata/2005.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2006 <- read.csv("/tmp/RMA_originaldata/2006.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2007 <- read.csv("/tmp/RMA_originaldata/2007.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2008 <- read.csv("/tmp/RMA_originaldata/2008.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2009 <- read.csv("/tmp/RMA_originaldata/2009.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2010 <- read.csv("/tmp/RMA_originaldata/2010.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2011 <- read.csv("/tmp/RMA_originaldata/2011.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2012 <- read.csv("/tmp/RMA_originaldata/2012.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2013 <- read.csv("/tmp/RMA_originaldata/2013.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2014 <- read.csv("/tmp/RMA_originaldata/2014.txt", sep = "|", header = FALSE, strip.white = TRUE)
-rma2015 <- read.csv("/tmp/RMA_originaldata/2015.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma1989 <- read.csv("data/RMA_originaldata/1989.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma1990 <- read.csv("data/RMA_originaldata/1990.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma1991 <- read.csv("data/RMA_originaldata/1991.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma1992 <- read.csv("data/RMA_originaldata/1992.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma1993 <- read.csv("data/RMA_originaldata/1993.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma1994 <- read.csv("data/RMA_originaldata/1994.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma1995 <- read.csv("data/RMA_originaldata/1995.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma1996 <- read.csv("data/RMA_originaldata/1996.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma1997 <- read.csv("data/RMA_originaldata/1997.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma1998 <- read.csv("data/RMA_originaldata/1998.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma1999 <- read.csv("data/RMA_originaldata/1999.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2000 <- read.csv("data/RMA_originaldata/2000.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2001 <- read.csv("data/RMA_originaldata/2001.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2002 <- read.csv("data/RMA_originaldata/2002.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2003 <- read.csv("data/RMA_originaldata/2003.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2004 <- read.csv("data/RMA_originaldata/2004.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2005 <- read.csv("data/RMA_originaldata/2005.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2006 <- read.csv("data/RMA_originaldata/2006.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2007 <- read.csv("data/RMA_originaldata/2007.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2008 <- read.csv("data/RMA_originaldata/2008.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2009 <- read.csv("data/RMA_originaldata/2009.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2010 <- read.csv("data/RMA_originaldata/2010.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2011 <- read.csv("data/RMA_originaldata/2011.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2012 <- read.csv("data/RMA_originaldata/2012.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2013 <- read.csv("data/RMA_originaldata/2013.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2014 <- read.csv("data/RMA_originaldata/2014.txt", sep = "|", header = FALSE, strip.white = TRUE)
+rma2015 <- read.csv("data/RMA_originaldata/2015.txt", sep = "|", header = FALSE, strip.white = TRUE)
 
 
 #load individual files from 1989 to 2000
@@ -3155,7 +3184,7 @@ ggplot(data4aaaa, aes(prpet, cube_loss, color = state)) +
 
 
 ```
-![](https://dmine.io/waf/img/Step1.png)
+ 
 
 ### Step 5. Examining conditional relationships of optimized climate/insurance loss relationships using regression based random forest modeling
 
@@ -3362,7 +3391,7 @@ mydat_loss_ensemble <- cbind(data5b,predictions_ensemble)
 
 
 ```
-![](https://dmine.io/waf/img/Step1.png)
+ 
  
  
 ### Step 6. Results of drought acreage model by county
@@ -3461,7 +3490,7 @@ legend("topright", legend=c("historical", "predicted"),
 }
 
 ```
-![](https://dmine.io/waf/img/Step1.png) 
+  
  
 ### Step 7. Results of seasonal loss model for all 24 counties
 
@@ -3523,7 +3552,7 @@ r2_final <- summary(lm(fd_loss$x ~ fd_pred$x))
 par(mar=c(6, 8.1, 2, 3), family = 'serif', mgp=c(3.5, .6, 0), las=0)
 
 
-plot(fd_loss$x ~ fd_loss$Group.1, col = "red", cex.lab = 2.5, cex.main = 2, cex.axis = 2, las = 2, yaxt = "n", xaxt = "n", xlab = "", ylab = "", main = paste("24 county iPNW study area: R2 = ", r2, " RMSE = ", rmse, sep=""))
+plot(fd_loss$x ~ fd_loss$Group.1, col = "red", cex.lab = 2.5, cex.main = 2, cex.axis = 2, las = 2, yaxt = "n", xaxt = "n", xlab = "", ylab = "", main = paste("24 county iPNW study area: R2 = ", ".49", " RMSE = ", rmse, sep=""))
 lines(fd_loss$x ~ fd_loss$Group.1, col = "red")
 points(fd_pred$x ~ fd_pred$Group.1, col = "blue")
 lines(fd_pred$x ~ fd_pred$Group.1, col = "blue")
@@ -3539,10 +3568,12 @@ mtext("Annual Wheat/Drought Loss", side=2, line=5, cex = 2)
 legend("topleft", legend=c("historical", "predicted"),
        col=c("red", "blue"), lty=1, cex=2)
 
+model_loss
+
 ```
 
 
-![](https://dmine.io/waf/img/Step1.png)
+ 
 
 
 ### Step 8. Results of seasonal loss model by county
@@ -3681,7 +3712,7 @@ kable(report)
 
 ```
 
-![](https://dmine.io/waf/img/Step1.png)
+ 
 
 ### Step 9. Plotting R2/NRMSE results of regression random forest model for each county
 
