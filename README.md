@@ -12,8 +12,6 @@ The following analyses examine agricultural commodity loss, at a county level, f
 
 Data Access:
 
-The attached zip file contains the full github repository, which includes data, the supplemental code, and an output html.  The github repository can be additionally viewed at: http://github.com/erichseamon/RFclimatePaper
-
 Data provided include climate correlations, climate matrices, climatological data taken from Abatzoglou's (2013) GRIDMET daily downscaled climate data, as well as wheat commodity pricing data at a county level.
 
 User should only need to download the attached zip file, decompress, and then run the Rmd from the location of data download.  The Rmd contains code to expand any zip files, and load data needed to re-generate the Rmd output (which is included as an html file).
