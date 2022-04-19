@@ -707,6 +707,7 @@ dmvector <- data.frame(dmvector)
   lwid = c(1.5,4)
 lhei = c(1.5,4,1)
   
+colnames(dmvector3) <- c(c(2:12), "")
 
 
   nba_heatmap_tmmx<- heatmap.2(dmvector3, Rowv=NA, Colv=NA, cexCol = 2, cexRow = 2, colsep=1:ncol(dmvector3), rowsep=1:nrow(dmvector3), col=my_palette,  scale="none", dendrogram = "none", trace= "none", labRow = rev(monthzzz), tracecol = "black", key = TRUE, notecol = "white", notecex = 2, key.ylab = "", key.xlab = "loss correlation range", key.title = "", main=paste(climate_var, " vs ", predictor_var, "\n", county_var, " County ", state_var, " ", damage_var, "\n", "MAX Correlation in cell: ",  monthnumlist3$combined, sep=""), lmat = rbind(c(0,3),c(2,1),c(0,4)), lwid = lwid, lhei = lhei, cellnote = dmvector3a) 
@@ -906,6 +907,9 @@ dmvector <- data.frame(dmvector)
   
 lwid = c(1.5,4)
 lhei = c(1.5,4,1)
+
+colnames(dmvector3) <- c(c(2:12), "")
+
   
   nba_heatmap_pet <- heatmap.2(dmvector3, Rowv=NA, Colv=NA, cexCol = 2, cexRow = 2, colsep=1:ncol(dmvector3), rowsep=1:nrow(dmvector3), col=my_palette,  scale="none", dendrogram = "none", trace= "none", labRow = rev(monthzzz), tracecol = "black", key = TRUE, notecol = "white", notecex = 2, key.ylab = "", key.xlab = "loss correlation range", key.title = "", main=paste(climate_var, " vs ", predictor_var, "\n", county_var, " County ", state_var, " ", damage_var, "\n", "MAX Correlation in cell: ",  monthnumlist3$combined, sep=""), lmat = rbind(c(0,3),c(2,1),c(0,4)), lwid = lwid, lhei = lhei, cellnote = dmvector3a) 
   
@@ -1104,6 +1108,8 @@ dmvector <- data.frame(dmvector)
 lwid = c(1.5,4)
 lhei = c(1.5,4,1)
   
+colnames(dmvector3) <- c(c(2:12), "")
+
   nba_heatmap_pr <- heatmap.2(dmvector3, Rowv=NA, Colv=NA, cexCol = 2, cexRow = 2, colsep=1:ncol(dmvector3), rowsep=1:nrow(dmvector3), col=my_palette,  scale="none", dendrogram = "none", trace= "none", labRow = rev(monthzzz), tracecol = "black", key = TRUE, notecol = "white", notecex = 2, key.ylab = "", key.xlab = "loss correlation range", key.title = "", main=paste(climate_var, " vs ", predictor_var, "\n", county_var, " County ", state_var, " ", damage_var, "\n", "MAX Correlation in cell: ",  monthnumlist3$combined, sep=""), lmat = rbind(c(0,3),c(2,1),c(0,4)), lwid = lwid, lhei = lhei, cellnote = dmvector3a)
   
  #  
@@ -1300,6 +1306,8 @@ dmvector <- data.frame(dmvector)
   
 lwid = c(1.5,4)
 lhei = c(1.5,4,1)
+
+colnames(dmvector3) <- c(c(2:12), "")
   
   nba_heatmap_pdsi <- heatmap.2(dmvector3, Rowv=NA, Colv=NA, cexCol = 2, cexRow = 2, colsep=1:ncol(dmvector3), rowsep=1:nrow(dmvector3), col=my_palette,  scale="none", dendrogram = "none", trace= "none", labRow = rev(monthzzz), tracecol = "black", key = TRUE, notecol = "white", notecex = 2, key.ylab = "", key.xlab = "loss correlation range", key.title = "", main=paste(climate_var, " vs ", predictor_var, "\n", county_var, " County ", state_var, " ", damage_var, "\n", "MAX Correlation in cell: ",  monthnumlist3$combined, sep=""), lmat = rbind(c(0,3),c(2,1),c(0,4)), lwid = lwid, lhei = lhei, cellnote = dmvector3a)
   
@@ -1319,7 +1327,7 @@ lhei = c(1.5,4,1)
 
 ### Step 3. Examining spatial relationships of climate lagged correlations
 
-In step 3, we generate maps of our climate-lagged correlations, for each climate variable.  Each county is labeled with the optimum monthly period that has the highest correlation for that climate variable and wheat/drought insurance loss (July 2 = two months previous to July, or May/June/July), along with the correlation value.  Each correlation value is absolute (correlation coefficent - R)
+In step 3, we generate maps of our climate-lagged correlations, for each climate variable.  Each county is labeled with the optimum monthly period that has the highest correlation for that climate variable and wheat/drought insurance loss (July 2 = two months previous to July, or May/June/July), along with the correlation value.  Each correlation value is absolute (correlation coefficient - R)
 
  
 
@@ -1591,8 +1599,9 @@ counties <- counties[counties$NAME != "Clearwater",]
       counties2 <- merge(counties, table5, by = "NAME" )
       
       #--new
-      
       counties3 <- merge(counties2, bestcounty2, by = "NAME")
+            counties3$ENDMONTH <- as.numeric(counties3$ENDMONTH)+1
+
       counties3$MONTHCOMBO <- paste(counties3$MONTH, counties3$ENDMONTH, sep="")
       
       #--new
@@ -1681,6 +1690,8 @@ counties <- counties[counties$NAME != "Clearwater",]
         paste0(as.character(round(counties3a[i, "CORRELATION"],2)), '<br/>',
                 counties3a[i, "MONTHCOMBO"]) 
       })
+      
+      labs2 <- counties3a$MONTHCOMBO
 
       map <- leaflet(data = counties3) %>% 
         
@@ -1690,14 +1701,14 @@ counties <- counties[counties$NAME != "Clearwater",]
         #addControl(title, position = "topleft", className="map-title") %>% 
         
         fitBounds(exte[1], exte[3], exte[2], exte[4]) %>% addPolygons(fillColor = ~pal(counties3$CORRELATION), fillOpacity = .8, weight = 2, stroke = TRUE, smoothFactor = 0.5, color = "black") %>%
-        addLabelOnlyMarkers(data = counties3, lng = lat_long[,1], lat = lat_long[,2], label = lapply(labs, HTML), labelOptions = labelOptions(noHide = TRUE, direction = 'middle', textOnly = TRUE, textsize = "14px", col = "white", style=list(
+        addLabelOnlyMarkers(data = counties3, lng = lat_long[,1], lat = lat_long[,2], label = lapply(labs2, HTML), labelOptions = labelOptions(noHide = TRUE, direction = 'middle', textOnly = TRUE, textsize = "14px", col = "white", style=list(
                                   
                                   'font-family'= 'serif',
                                   'font-style'= 'bold',
-                                  'font-size' = '14px'
+                                  'font-size' = '20px'
                                   ))) %>%
         
-        addLegend(pal = pal2, values = counties3$CORRELATION,  labels = c("1", "2"), opacity = .5, title = paste("Correlation",  " Matrix", sep="<br>"),
+        addLegend(pal = pal2, values = counties3$CORRELATION,  labels = c("1", "2"), opacity = .5, title = paste("Optimum", "Correlation", sep="<br>"),
                   position = "bottomright", labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE)))
       
       map
@@ -1965,6 +1976,8 @@ counties <- counties[counties$NAME != "Clearwater",]
       #--new
       
       counties3 <- merge(counties2, bestcounty2, by = "NAME")
+                  counties3$ENDMONTH <- as.numeric(counties3$ENDMONTH)+1
+
       counties3$MONTHCOMBO <- paste(counties3$MONTH, counties3$ENDMONTH, sep="")
       
       #--new
@@ -2040,6 +2053,9 @@ counties3$CORRELATION <- as.numeric(counties3$CORRELATION)
         paste0(as.character(round(counties3a[i, "CORRELATION"],2)), '<br/>',
                 counties3a[i, "MONTHCOMBO"]) 
       })
+      
+            labs2 <- counties3a$MONTHCOMBO
+
 
       map <- leaflet(data = counties3) %>% 
         
@@ -2049,14 +2065,14 @@ counties3$CORRELATION <- as.numeric(counties3$CORRELATION)
         #addControl(title, position = "topleft", className="map-title") %>% 
         
         fitBounds(exte[1], exte[3], exte[2], exte[4]) %>% addPolygons(fillColor = ~pal(counties3$CORRELATION), fillOpacity = .8, weight = 2, stroke = TRUE, smoothFactor = 0.5, color = "black") %>%
-        addLabelOnlyMarkers(data = counties3, lng = lat_long[,1], lat = lat_long[,2], label = lapply(labs, HTML), labelOptions = labelOptions(noHide = TRUE, direction = 'middle', textOnly = TRUE, textsize = "14px", col = "white", style=list(
+        addLabelOnlyMarkers(data = counties3, lng = lat_long[,1], lat = lat_long[,2], label = lapply(labs2, HTML), labelOptions = labelOptions(noHide = TRUE, direction = 'middle', textOnly = TRUE, textsize = "14px", col = "white", style=list(
                                   
                                   'font-family'= 'serif',
                                   'font-style'= 'bold',
-                                  'font-size' = '14px'
+                                  'font-size' = '20px'
                                   ))) %>%
         
-        addLegend(pal = pal, values = counties3$CORRELATION,  labels = c("1", "2"), opacity = .5, title = paste("Correlation",  " Matrix", sep="<br>"),
+        addLegend(pal = pal, values = counties3$CORRELATION,  labels = c("1", "2"), opacity = .5, title = paste("Optimum",  "Correlation", sep="<br>"),
                   position = "bottomright")
       
       map
@@ -2325,6 +2341,8 @@ counties <- counties[counties$NAME != "Clearwater",]
       #--new
       
       counties3 <- merge(counties2, bestcounty2, by = "NAME")
+                  counties3$ENDMONTH <- as.numeric(counties3$ENDMONTH)+1
+
       counties3$MONTHCOMBO <- paste(counties3$MONTH, counties3$ENDMONTH, sep="")
       
       #--new
@@ -2400,6 +2418,9 @@ counties3$CORRELATION <- as.numeric(counties3$CORRELATION)
         paste0(as.character(round(counties3a[i, "CORRELATION"],2)), '<br/>',
                 counties3a[i, "MONTHCOMBO"]) 
       })
+      
+            labs2 <- counties3a$MONTHCOMBO
+
 
       map <- leaflet(data = counties3) %>% 
         
@@ -2409,14 +2430,14 @@ counties3$CORRELATION <- as.numeric(counties3$CORRELATION)
         #addControl(title, position = "topleft", className="map-title") %>% 
         
         fitBounds(exte[1], exte[3], exte[2], exte[4]) %>% addPolygons(fillColor = ~pal(counties3$CORRELATION), fillOpacity = .8, weight = 2, stroke = TRUE, smoothFactor = 0.5, color = "black") %>%
-        addLabelOnlyMarkers(data = counties3, lng = lat_long[,1], lat = lat_long[,2], label = lapply(labs, HTML), labelOptions = labelOptions(noHide = TRUE, direction = 'middle', textOnly = TRUE, textsize = "14px", col = "white", style=list(
+        addLabelOnlyMarkers(data = counties3, lng = lat_long[,1], lat = lat_long[,2], label = lapply(labs2, HTML), labelOptions = labelOptions(noHide = TRUE, direction = 'middle', textOnly = TRUE, textsize = "14px", col = "white", style=list(
                                   
                                   'font-family'= 'serif',
                                   'font-style'= 'bold',
-                                  'font-size' = '14px'
+                                  'font-size' = '20px'
                                   ))) %>%
         
-        addLegend(pal = pal, values = counties3$CORRELATION,  labels = c("1", "2"), opacity = .5, title = paste("Correlation",  " Matrix", sep="<br>"),
+        addLegend(pal = pal, values = counties3$CORRELATION,  labels = c("1", "2"), opacity = .5, title = paste("Optimum", "Correlation", sep="<br>"),
                   position = "bottomright")
       
       map
@@ -2684,6 +2705,8 @@ counties <- counties[counties$NAME != "Clearwater",]
       #--new
       
       counties3 <- merge(counties2, bestcounty2, by = "NAME")
+                  counties3$ENDMONTH <- as.numeric(counties3$ENDMONTH)+1
+
       counties3$MONTHCOMBO <- paste(counties3$MONTH, counties3$ENDMONTH, sep="")
       
       #--new
@@ -2771,6 +2794,9 @@ counties3$CORRELATION <- as.numeric(counties3$CORRELATION)
         paste0(as.character(round(counties3a[i, "CORRELATION"],2)), '<br/>',
                 counties3a[i, "MONTHCOMBO"]) 
       })
+      
+            labs2 <- counties3a$MONTHCOMBO
+
 
       map <- leaflet(data = counties3) %>% 
         
@@ -2780,14 +2806,14 @@ counties3$CORRELATION <- as.numeric(counties3$CORRELATION)
         #addControl(title, position = "topleft", className="map-title") %>% 
         
         fitBounds(exte[1], exte[3], exte[2], exte[4]) %>% addPolygons(fillColor = ~pal(counties3$CORRELATION), fillOpacity = .8, weight = 2, stroke = TRUE, smoothFactor = 0.5, color = "black") %>%
-        addLabelOnlyMarkers(data = counties3, lng = lat_long[,1], lat = lat_long[,2], label = lapply(labs, HTML), labelOptions = labelOptions(noHide = TRUE, direction = 'middle', textOnly = TRUE, textsize = "14px", col = "white", style=list(
+        addLabelOnlyMarkers(data = counties3, lng = lat_long[,1], lat = lat_long[,2], label = lapply(labs2, HTML), labelOptions = labelOptions(noHide = TRUE, direction = 'middle', textOnly = TRUE, textsize = "14px", col = "white", style=list(
                                   
                                   'font-family'= 'serif',
                                   'font-style'= 'bold',
-                                  'font-size' = '14px'
+                                  'font-size' = '20px'
                                   ))) %>%
         
-        addLegend(pal = pal2, values = counties3$CORRELATION,  labels = c("1", "2"), opacity = .5, title = paste("Correlation",  " Matrix", sep="<br>"),
+        addLegend(pal = pal2, values = counties3$CORRELATION,  labels = c("1", "2"), opacity = .5, title = paste("Optimum", "Correlation", sep="<br>"),
                   position = "bottomright", labFormat = labelFormat(transform = function(x) sort(x, decreasing = TRUE)))
       
       map
