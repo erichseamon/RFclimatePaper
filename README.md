@@ -22,10 +22,6 @@ All data is found within the /data folder.
 
 seamon_dissertation_dataload.R. This file loads all data dynamically from github into R. This script is run automatically within each appendix Rmarkdown (located in the appendices folder)
 
-/RMA_Rda: RDA database files that contain aggregated PNW insurance loss claim data.
-
-/RMA_csv: Individual CSV insurance claim data files by year.
-
 /RMA_originaldata: Original .txt files for insurance loss claims, by year, for the entire United States.
 
  - Contains a .csv and a .txt file. Both files contain the same data but in differing formats.
@@ -35,33 +31,35 @@ seamon_dissertation_dataload.R. This file loads all data dynamically from github
 
 /climate_correlation_summaries. Climate correlation summary data.
 
- - Each csv represents a summary of climate correlation values generated from the model output. Each .csv is in the following format:
+ - Each .csv represents a summary of climate correlation values generated from the model output. Each .csv is in the following format:
    - <state>_<county>_<crop>_<damagecause>_<loss_transformation>.csv
-  Example: ID_Benewah_WHEAT_Drought_acres_loss.csv
+   Example: ID_Benewah_WHEAT_Drought_acres_loss.csv
 
 /climate_matrices. Climate correlation matrices between individual climate variables and wheat/drought insurance loss. 
 
- - Each csv represents a matrix of climate correlational values in the following format:
+ - Each .csv represents a matrix of climate correlational values in the following format:
    - <state>_<county>_<crop>_<damagecause>_<month>_<month preceding>.csv
- Example: ID_Benewah_WHEAT_Drought_mar6.csv
+   Example: ID_Benewah_WHEAT_Drought_mar6.csv
 
 /climate_outputs. Climate pyramid values by county.  Each .csv is in the following format:
 
  - <climate variable>_<month><months preceding>_<loss_value>_climatecorrelation.csv
+ 
  climate variable acroyms:
+ 
    - tmmx = maximum temperature
    - fm100 = 100 hour fuel moisture
    - pdsi = palmer drought severity index
    - pet = potential evapotranspiration
    - pr = precipitation
   
- Example: tmmx_jan1_cube_root_loss_climatecorrelations.csv
+   Example: tmmx_jan1_cube_root_loss_climatecorrelations.csv
   
 /climatology. Base climatology for the iPNW.
 
-- Contains .csv files that represent climatological base values, at a monthly, county level, for all years from 1989 to 2015.  Each file is structured in the following format:
+ - Contains .csv files that represent climatological base values, at a monthly, county level, for all years from 1989 to 2015.  Each file is structured in   the following format:
 
-  - <state>_<year>_ipnw_summary.  Example: Idaho_1989_ipnw_summary
+   - <state>_<year>_ipnw_summary.  Example: Idaho_1989_ipnw_summary
 
 /counties. County shapefiles.
 
@@ -93,6 +91,4 @@ seamon_dissertation_dataload.R. This file loads all data dynamically from github
 - Contains a .zip file, which expands into:
  
   - CPI.csv.
-
-/wheatproduction. NASS wheat production data.
 
