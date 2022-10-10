@@ -32,9 +32,23 @@ seamon_dissertation_dataload.R. This file loads all data dynamically from github
 
 /climate_matrices. Climate correlation matrices between individual climate variables and wheat/drought insurance loss. Used in Appendix C.
 
-/climate_outputs. Climate outputs.
+/climate_outputs. Climate pyramid values by county.  Each .csv is in the following format:
 
+ - <climate variable>_<month><months preceding>_<loss_value>_climatecorrelation.csv
+ climate variable acroyms:
+   - tmmx = maximum temperature
+   - fm100 = 100 hour fuel moisture
+   - pdsi = palmer drought severity index
+   - pet = potential evapotranspiration
+   - pr = precipitation
+  
+ Example: tmmx_jan1_cube_root_loss_climatecorrelations.csv
+  
 /climatology. Base climatology for the iPNW.
+
+- Contains .csv files that represent climatological mean values, at a monthly, county level, for all years from 1989 to 2015.  Each file is structured in the following format:
+
+  - <state>_<year>_ipnw_summary.  Example: Idaho_1989_ipnw_summary
 
 /counties. County shapefiles.
 
@@ -48,12 +62,14 @@ seamon_dissertation_dataload.R. This file loads all data dynamically from github
 /states. State shapefiles.
 
 - Contains two files:
+  
   - states_conus.zip.  .Zip file which expands into state boundary shapefile.
   - threestate_boundary.zip. .Zip file which expands into shape file for just the three states of Idaho, Washington, and Idaho.
 
 /wheat_prices. Annual wheat prices.
 
 - Contains two files:
+  
   - wheat_prices_1989_2015.csv.  Wheat prices from 1989 to 2015
   - wheat_prices_monthly_1998_2017.csv.  Monthly wheat prices from 1998 to 2015.
 
