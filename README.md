@@ -32,17 +32,34 @@ seamon_dissertation_dataload.R. This file loads all data dynamically from github
 
 /climate_matrices. Climate correlation matrices between individual climate variables and wheat/drought insurance loss. Used in Appendix C.
 
-/climate_outputs. Climate outputs that are used in Appendix C.
+/climate_outputs. Climate outputs.
 
-/climatology. Base climatology for the iPNW used in Appendix C.
+/climatology. Base climatology for the iPNW.
 
-/counties. County shapefiles used in all appendices.
+/counties. County shapefiles.
 
-/states. State shapefiles used in all appendices.
+- UScounties.zip. Zip file which expands into a shapefile of US counties.
+- UScounties_conus.zip. Zip file which expands into a shapefile of coterminous US counties 
+- counties_fips.csv.  Zip file which expands into a shapefile of US counties, with fips.
+- threestate_palouse.zip.  Zip file which expands into a shapefile of the inland Pacific Northwest palouse agricultural counties.
+- threestate_southernID.zip.  Zip file which expands into a shapefile of the southern Idaho agricultural region counties.
+- threestate_willamette.zip.  Zip file which expands into a shapefile of the willamette valley agricultural region counties.
 
-/wheat_prices. Annual wheat prices used in Appendix C.
+/states. State shapefiles.
 
-/CPI. Consumer pricing indexing data used in Appendix A.
+- Contains two files:
+  - states_conus.zip.  .Zip file which expands into state boundary shapefile.
+  - threestate_boundary.zip. .Zip file which expands into shape file for just the three states of Idaho, Washington, and Idaho.
+
+/wheat_prices. Annual wheat prices.
+
+- Contains two files:
+  - wheat_prices_1989_2015.csv.  Wheat prices from 1989 to 2015
+  - wheat_prices_monthly_1998_2017.csv.  Monthly wheat prices from 1998 to 2015.
+
+/CPI. Consumer pricing indexing data.  
+
+- Contains a .zip file, which expands into CPI.csv.
 
 /wheatproduction. NASS wheat production data, used in Appendix A.
 
