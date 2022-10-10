@@ -26,11 +26,24 @@ seamon_dissertation_dataload.R. This file loads all data dynamically from github
 
 /RMA_csv: Individual CSV insurance claim data files by year.
 
-/RMA_originaldata: Original .txt files for insurance loss claims, by year, for the entire United States. These files are used in Appendix A and Appendix B.
+/RMA_originaldata: Original .txt files for insurance loss claims, by year, for the entire United States.
 
-/climate_correlation_summaries. Climate correlation summary data, loaded in Appendix C for modeling.
+ - Contains a .csv and a .txt file. Both files contain the same data but in differing formats.
+   - RMA_originaldata_csv.zip
+   - RMA_originaldata_txt.zip 
+   - Each .Zip file contains yearly .csv files of insurance loss for the US, (1989 to 2015). Example: 1989.csv
 
-/climate_matrices. Climate correlation matrices between individual climate variables and wheat/drought insurance loss. Used in Appendix C.
+/climate_correlation_summaries. Climate correlation summary data.
+
+ - Each csv represents a summary of climate correlation values generated from the model output. Each .csv is in the following format:
+   - <state>_<county>_<crop>_<damagecause>_<loss_transformation>.csv
+  Example: ID_Benewah_WHEAT_Drought_acres_loss.csv
+
+/climate_matrices. Climate correlation matrices between individual climate variables and wheat/drought insurance loss. 
+
+ - Each csv represents a matrix of climate correlational values in the following format:
+   - <state>_<county>_<crop>_<damagecause>_<month>_<month preceding>.csv
+ Example: ID_Benewah_WHEAT_Drought_mar6.csv
 
 /climate_outputs. Climate pyramid values by county.  Each .csv is in the following format:
 
@@ -46,18 +59,20 @@ seamon_dissertation_dataload.R. This file loads all data dynamically from github
   
 /climatology. Base climatology for the iPNW.
 
-- Contains .csv files that represent climatological mean values, at a monthly, county level, for all years from 1989 to 2015.  Each file is structured in the following format:
+- Contains .csv files that represent climatological base values, at a monthly, county level, for all years from 1989 to 2015.  Each file is structured in the following format:
 
   - <state>_<year>_ipnw_summary.  Example: Idaho_1989_ipnw_summary
 
 /counties. County shapefiles.
 
-- UScounties.zip. Zip file which expands into a shapefile of US counties.
-- UScounties_conus.zip. Zip file which expands into a shapefile of coterminous US counties 
-- counties_fips.csv.  Zip file which expands into a shapefile of US counties, with fips.
-- threestate_palouse.zip.  Zip file which expands into a shapefile of the inland Pacific Northwest palouse agricultural counties.
-- threestate_southernID.zip.  Zip file which expands into a shapefile of the southern Idaho agricultural region counties.
-- threestate_willamette.zip.  Zip file which expands into a shapefile of the willamette valley agricultural region counties.
+ - Contains six files:
+ 
+   - UScounties.zip. Zip file which expands into a shapefile of US counties.
+   - UScounties_conus.zip. Zip file which expands into a shapefile of coterminous US counties 
+   - counties_fips.csv.  Zip file which expands into a shapefile of US counties, with fips.
+   - threestate_palouse.zip.  Zip file which expands into a shapefile of the inland Pacific Northwest palouse agricultural counties.
+   - threestate_southernID.zip.  Zip file which expands into a shapefile of the southern Idaho agricultural region counties.
+   - threestate_willamette.zip.  Zip file which expands into a shapefile of the willamette valley agricultural region counties.
 
 /states. State shapefiles.
 
@@ -75,7 +90,9 @@ seamon_dissertation_dataload.R. This file loads all data dynamically from github
 
 /CPI. Consumer pricing indexing data.  
 
-- Contains a .zip file, which expands into CPI.csv.
+- Contains a .zip file, which expands into:
+ 
+  - CPI.csv.
 
-/wheatproduction. NASS wheat production data, used in Appendix A.
+/wheatproduction. NASS wheat production data.
 
