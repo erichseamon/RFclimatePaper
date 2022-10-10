@@ -4,7 +4,7 @@ Submitted to Environmental Data Science 2022
 
 Erich Seamon, Paul E. Gessler, John T. Abatzoglou, Philip W. Mote, Stephen S. Lee
 
-April 2022
+October 2022
 
 ## Overview:
 
