@@ -38,7 +38,7 @@ seamon_dissertation_dataload.R. This file loads all data dynamically from github
 /climate_matrices. Climate correlation matrices between individual climate variables and wheat/drought insurance loss. 
 
  - Each .csv represents a matrix of climate correlational values in the following format:
-   - |state|_|county|_|crop|_|damagecause|_|month|_month preceding.csv
+   - &ltstate|_|county|_|crop|_|damagecause|_|month|_month preceding.csv
    Example: ID_Benewah_WHEAT_Drought_mar6.csv
    Column descriptions:
      - bi: burning index (index)
