@@ -25,6 +25,7 @@ seamon_dissertation_dataload.R. This file loads all data dynamically from github
 /RMA_originaldata: Original .txt files for insurance loss claims, by year, for the entire United States.
 
  - Contains a .csv and a .txt file. Both files contain the same data but in differing formats.
+ 
    - RMA_originaldata_csv.zip
    - RMA_originaldata_txt.zip 
    - Each .Zip file contains yearly .csv files of insurance loss for the US, (1989 to 2015). Example: 1989.csv
@@ -32,15 +33,21 @@ seamon_dissertation_dataload.R. This file loads all data dynamically from github
 /climate_correlation_summaries. Climate correlation summary data.
 
  - Each .csv represents a summary of climate correlation values generated from the model output. Each .csv is in the following format:
+ 
    - &lt;state&gt;_&lt;county&gt;_&lt;crop&gt;_&lt;damagecause&gt;_&lt;loss_transformation&gt;.csv
+   
    Example: ID_Benewah_WHEAT_Drought_acres_loss.csv
 
 /climate_matrices. Climate correlation matrices between individual climate variables and wheat/drought insurance loss. 
 
  - Each .csv represents a matrix of climate correlational values in the following format:
+ 
    - &lt;state&gt;_&lt;county&gt;_&lt;crop&gt;_&lt;damagecause&gt;_&lt;month&gt;_month preceding.csv
+   
    Example: ID_Benewah_WHEAT_Drought_mar6.csv
+   
    Column descriptions:
+   
      - bi: burning index (index)
      - pr: precipitation (millimeters)
      - th: wind direction (degrees clockwise from north)
@@ -63,14 +70,26 @@ seamon_dissertation_dataload.R. This file loads all data dynamically from github
  
  climate variable acroyms:
  
-   - tmmx = maximum temperature
-   - fm100 = 100 hour fuel moisture
-   - pdsi = palmer drought severity index
-   - pet = potential evapotranspiration
-   - pr = precipitation
+   - tmmx = maximum temperature (kelvin)
+   - fm100 = 100 hour fuel moisture (percentage)
+   - pdsi = palmer drought severity index (index ranging between -4 and 4)
+   - pet = potential evapotranspiration (millimeters)
+   - pr = precipitation (millimeters)
   
    Example: tmmx_jan1_cube_root_loss_climatecorrelations.csv
-  
+   
+   Column descriptions:
+   
+   - climate variable: (climate variable descriptions and units listed under /climate_matrices)
+   - loss: insurance loss.  Transformed value is indicated in title of csv (e.g.. cube root loss)
+   - year: e.g. 1989
+   - state: e.g. Idaho
+   - county: e.g. Benewah
+   - commodity: crop commodity (e.g. WHEAT)
+   - matrixnumber: time window (e.g. jan6  = six months previous and including january)
+   - clim_zscore: normalized climate value for associated time window
+   - loss_zscore: normalized insurance loss value for associated time window
+   
 /climatology. Base climatology for the iPNW.
 
  - Contains .csv files that represent climatological base values, at a monthly, county level, for all years from 1989 to 2015.  Each file is structured in   the following format:
