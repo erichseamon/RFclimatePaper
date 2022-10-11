@@ -64,31 +64,33 @@ seamon_dissertation_dataload.R. This file loads all data dynamically from github
      - fm1000: 1000 hour fuel moisture (percentage)
      - fm100: 100 hour fuel moisture (percentage)
      
-/climate_outputs. Climate pyramid values by county.  Each .csv is in the following format:
+/climate_outputs. Climate pyramid values by county.  
 
- - <climate variable>_<month><months preceding>_<loss_value>_climatecorrelation.csv
+ - Each .csv is in the following format:
+
+   - <climate variable>_<month><months preceding>_<loss_value>_climatecorrelation.csv
  
- climate variable acroyms:
- 
-   - tmmx = maximum temperature (kelvin)
-   - fm100 = 100 hour fuel moisture (percentage)
-   - pdsi = palmer drought severity index (index ranging between -4 and 4)
-   - pet = potential evapotranspiration (millimeters)
-   - pr = precipitation (millimeters)
-  
    Example: tmmx_jan1_cube_root_loss_climatecorrelations.csv
-   
+ 
+   Climate variable acroyms:
+ 
+     - tmmx = maximum temperature (kelvin)
+     - fm100 = 100 hour fuel moisture (percentage)
+     - pdsi = palmer drought severity index (index ranging between -4 and 4)
+     - pet = potential evapotranspiration (millimeters)
+     - pr = precipitation (millimeters)
+    
    Column descriptions:
    
-   - climate variable: (climate variable descriptions and units listed under /climate_matrices)
-   - loss: insurance loss.  Transformed value is indicated in title of csv (e.g.. cube root loss)
-   - year: e.g. 1989
-   - state: e.g. Idaho
-   - county: e.g. Benewah
-   - commodity: crop commodity (e.g. WHEAT)
-   - matrixnumber: time window (e.g. jan6  = six months previous and including january)
-   - clim_zscore: normalized climate value for associated time window
-   - loss_zscore: normalized insurance loss value for associated time window
+     - climate variable: (climate variable descriptions and units listed under /climate_matrices)
+     - loss: insurance loss.  Transformed value is indicated in title of csv (e.g.. cube root loss)
+     - year: e.g. 1989
+     - state: e.g. Idaho
+     - county: e.g. Benewah
+     - commodity: crop commodity (e.g. WHEAT)
+      - matrixnumber: time window (e.g. jan6  = six months previous and including january)
+    - clim_zscore: normalized climate value for associated time window
+     - loss_zscore: normalized insurance loss value for associated time window
    
 /climatology. Base climatology for the iPNW.
 
@@ -98,7 +100,7 @@ seamon_dissertation_dataload.R. This file loads all data dynamically from github
 
 /counties. County shapefiles.
 
- - Contains six files:
+- Contains six files in the following formats:
  
    - UScounties.zip. Zip file which expands into a shapefile of US counties.
    - UScounties_conus.zip. Zip file which expands into a shapefile of coterminous US counties 
