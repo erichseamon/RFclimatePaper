@@ -97,6 +97,27 @@ seamon_dissertation_dataload.R. This file loads all data dynamically from github
  - Contains .csv files that represent climatological base values, at a monthly, county level, for all years from 1989 to 2015.  Each file is structured in   the following format:
 
    - <state>_<year>_ipnw_summary.  Example: Idaho_1989_ipnw_summary
+   
+   Column descriptions:
+   
+     - bi: burning index (index)
+     - pr: precipitation (millimeters)
+     - th: wind direction (degrees clockwise from north)
+     - pdsi: palmer drought severity index (index ranging from -4 to 4)
+     - pet: potential evapotranspiration (millimeters)
+     - erc: energy release component (index)
+     - rmin: relative minimum humidity (percentage 0 to 100)
+     - rmax: relative maximum humidity (percentage 0 to 100)
+     - tmmn: minimum temperature (kelvin)
+     - tmmx: maximum temperature (kelvin)
+     - srad: solar radiation (kWh/m2)
+     - sph: specific humidity (kg/kg)
+     - vs: wind velocity at 10m (meters/sec)
+     - fm1000: 1000 hour fuel moisture (percentage)
+     - fm100: 100 hour fuel moisture (percentage)
+     - countyfips: county fips value
+     - month: e.g. Jan
+     - year: e.g. 1989
 
 /counties. County shapefiles.
 
