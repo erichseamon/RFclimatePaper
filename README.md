@@ -40,7 +40,23 @@ seamon_dissertation_dataload.R. This file loads all data dynamically from github
  - Each .csv represents a matrix of climate correlational values in the following format:
    - <state>_<county>_<crop>_<damagecause>_<month>_<month preceding>.csv
    Example: ID_Benewah_WHEAT_Drought_mar6.csv
-
+   Column descriptions:
+     - bi: burning index (index)
+     - pr: precipitation (millimeters)
+     - th: wind direction (degrees clockwise from north)
+     - pdsi: palmer drought severity index (index ranging from -4 to 4)
+     - pet: potential evapotranspiration (millimeters)
+     - erc: energy release component (index)
+     - rmin: relative minimum humidity (percentage 0 to 100)
+     - rmax: relative maximum humidity (percentage 0 to 100)
+     - tmmn: minimum temperature (kelvin)
+     - tmmx: maximum temperature (kelvin)
+     - srad: solar radiation (kWh/m2)
+     - sph: specific humidity (kg/kg)
+     - vs: wind velocity at 10m (meters/sec)
+     - fm1000: 1000 hour fuel moisture (percentage)
+     - fm100: 100 hour fuel moisture (percentage)
+     
 /climate_outputs. Climate pyramid values by county.  Each .csv is in the following format:
 
  - <climate variable>_<month><months preceding>_<loss_value>_climatecorrelation.csv
