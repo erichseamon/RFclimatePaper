@@ -32,7 +32,7 @@ seamon_dissertation_dataload.R. This file loads all data dynamically from github
 /climate_correlation_summaries. Climate correlation summary data.
 
  - Each .csv represents a summary of climate correlation values generated from the model output. Each .csv is in the following format:
-   - <state>_<county>_<crop>_<damagecause>_<loss_transformation>.csv
+   - &lt;state&gt;_&lt;county&gt;_&lt;crop&gt;_&lt;damagecause&gt;_&lt;loss_transformation&gt;.csv
    Example: ID_Benewah_WHEAT_Drought_acres_loss.csv
 
 /climate_matrices. Climate correlation matrices between individual climate variables and wheat/drought insurance loss. 
