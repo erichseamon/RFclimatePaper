@@ -20,8 +20,6 @@ User should only need to download the attached zip file, decompress, and then ru
 
 All data is found within the /data folder. 
 
-seamon_dissertation_dataload.R. This file loads all data dynamically from github into R. This script is run automatically within each appendix Rmarkdown (located in the appendices folder)
-
 /RMA_originaldata: Original .txt files for insurance loss claims, by year, for the entire United States.
 
  - Contains a .csv and a .txt file. Both files contain the same data but in differing formats.
@@ -121,15 +119,10 @@ seamon_dissertation_dataload.R. This file loads all data dynamically from github
 
 /counties. County shapefiles.
 
-- Contains six files in the following formats:
+- Contains one file in the following formats:
  
-   - UScounties.zip. Zip file which expands into a shapefile of US counties.
-   - UScounties_conus.zip. Zip file which expands into a shapefile of coterminous US counties 
-   - counties_fips.csv.  Zip file which expands into a shapefile of US counties, with fips.
    - threestate_palouse.zip.  Zip file which expands into a shapefile of the inland Pacific Northwest palouse agricultural counties.
-   - threestate_southernID.zip.  Zip file which expands into a shapefile of the southern Idaho agricultural region counties.
-   - threestate_willamette.zip.  Zip file which expands into a shapefile of the willamette valley agricultural region counties.
-
+   
 /states. State shapefiles.
 
 - Contains two files:
@@ -144,9 +137,4 @@ seamon_dissertation_dataload.R. This file loads all data dynamically from github
   - wheat_prices_1989_2015.csv.  Wheat prices from 1989 to 2015
   - wheat_prices_monthly_1998_2017.csv.  Monthly wheat prices from 1998 to 2015.
 
-/CPI. Consumer pricing indexing data.  
-
-- Contains a .zip file, which expands into:
- 
-  - CPI.csv.
 
